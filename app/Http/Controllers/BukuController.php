@@ -28,6 +28,7 @@ class BukuController extends Controller
 
         $userId = Auth::id();
         $buku = Buku::create([
+            'user_id' => $userId,
             'judul' => $validatedData['judul'],
             'penulis' => $validatedData['penulis'],
             'penerbit' => $validatedData['penerbit'],
