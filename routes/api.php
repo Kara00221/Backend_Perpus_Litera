@@ -21,6 +21,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     //Buku
     Route::get('/buku', [BukuController::class,'index']);
+    Route::get('/buku/{id}', [BukuController::class, 'show']);
     Route::post('/buku/create', [BukuController::class,'store']);
     Route::post('/buku/update/{id}', [BukuController::class,'update']);
     Route::delete('/buku/delete/{id}', [BukuController::class,'destroy']);

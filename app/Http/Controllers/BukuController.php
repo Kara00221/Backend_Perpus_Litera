@@ -42,6 +42,17 @@ class BukuController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $buku = Buku::find($id);
+
+        if (!$buku) {
+            return response()->json(['message' => 'Buku tidak ditemukan'], 404);
+        }
+
+        return response()->json($buku);
+    }
+
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
