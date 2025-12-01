@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nomor_telepon' => 'required|string|max:255',
+            'nomor_telepon' => 'required|string|min:8|max:255',
             'umur' => 'required',
             'role' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
