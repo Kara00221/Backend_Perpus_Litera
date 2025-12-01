@@ -67,7 +67,7 @@ class BukuController extends Controller
 
         $userId = Auth::id();
         $buku = Buku::find($id);
-        if(!$buku || $buku->id_buku != $userId) 
+        if(!$buku) 
         {
             return response()->json(['message' => 'Buku tidak ditemukan!']);
         }
@@ -81,7 +81,7 @@ class BukuController extends Controller
         $userId = Auth::id();
         $buku = Buku::find($id);
 
-        if(!$buku || $buku->id_buku != $userId)
+        if(!$buku)
         {
             return response()->json(['message' => 'Buku tidak ditemukan!']);
         }
