@@ -57,6 +57,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        return response()->json(User::all());
+    }
+
+
     public function logout(Request $request)
     {
         if(Auth::check()) {

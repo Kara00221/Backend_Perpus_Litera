@@ -12,8 +12,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $allPeminjaman = Peminjaman::all()::with('user')->get();
-        return response()->json($allPeminjaman);
+        return Peminjaman::with('user')->get();
     }
 
     public function store(Request $request)

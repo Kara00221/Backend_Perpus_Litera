@@ -23,7 +23,7 @@ class Peminjaman extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_users');
+        return $this->belongsTo(User::class, 'id_users', 'id');
     }
 
     public function index()
@@ -31,7 +31,6 @@ class Peminjaman extends Model
         $allPeminjaman = Peminjaman::with('user')->get();
         return response()->json($allPeminjaman);
     }
-
 
     public function detailPeminjaman()
     {
