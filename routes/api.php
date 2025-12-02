@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
 
+Route::middleware('auth:sanctum')->post('/logout', [UserController::class, 'logout']);
+
+
 Route::middleware(['auth:api'])->group(function () {
     //Peminjaman
     Route::get('/peminjaman', [PeminjamanController::class,'index']);
@@ -35,5 +38,4 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'delete']);
     //DetailPeminjaman
 
-    Route::post('/logout', [UserController::class,'logout']);
 });

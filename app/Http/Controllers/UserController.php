@@ -59,12 +59,11 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        if(Auth::check()) {
+        if(auth('sanctum')->check()) {
             $request->user()->currentAccessToken()->delete();
 
             return response()->json(['message' => 'Log Out Berhasil']);
         }
-
-        return response()->json(['message' => 'Belum Log In'] ,401);
+        return response()->json(['message' => 'Belum Log In'], 401);
     }
 }
