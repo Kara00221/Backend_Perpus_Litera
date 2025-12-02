@@ -17,7 +17,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/peminjaman/create', [PeminjamanController::class,'store']);
     Route::post('/peminjaman/update/{id}', [PeminjamanController::class, 'update']);
     Route::delete('/peminjaman/delete/{id}', [PeminjamanController::class,'destroy']);
-    //Peminjaman
 
     //Buku
     Route::get('/buku', [BukuController::class,'index']);

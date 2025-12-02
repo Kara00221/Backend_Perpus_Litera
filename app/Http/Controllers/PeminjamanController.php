@@ -12,7 +12,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $allPeminjaman = Peminjaman::all();
+        $allPeminjaman = Peminjaman::all()::with('user')->get();
         return response()->json($allPeminjaman);
     }
 
