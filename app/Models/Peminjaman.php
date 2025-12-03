@@ -23,7 +23,7 @@ class Peminjaman extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_users', 'id_users');
+        return $this->belongsTo(User::class, 'id_users');
     }
 
     public function detailPeminjaman()

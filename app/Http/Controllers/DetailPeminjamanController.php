@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DetailPeminjamanController extends Controller
 {
+    DetailPeminjaman::with(['peminjaman.user', 'buku'])->get();
+    
     public function index()
     {
         return DetailPeminjaman::with(['peminjaman', 'buku'])->get();

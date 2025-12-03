@@ -21,13 +21,11 @@ class DetailPeminjaman extends Model
         'denda',
     ];
 
-    public function buku()
-    {
-        return $this->belongsTo(Buku::class, 'id_buku', 'id_buku');
+    public function peminjaman() {
+        return $this->belongsTo(Peminjaman::class, 'id_peminjaman');
     }
 
-    public function peminjaman()
-    {
-        return $this->belongsTo(Peminjaman::class, 'id_peminjaman', 'id_peminjaman');
+    public function buku() {
+        return $this->belongsTo(Buku::class, 'id_buku');
     }
 }
