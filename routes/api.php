@@ -6,6 +6,7 @@ use App\Http\Controllers\DetailPeminjamanController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Models\DetailPeminjaman;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [UserController::class,'register']);
@@ -37,5 +38,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/detailPeminjaman/update/{id}', [DetailPeminjamanController::class,'update']);
     Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'delete']);
     //DetailPeminjaman
+
+    //Laporan
+    Route::middleware(['auth:api'])->group(function () {
+    Route::get('/laporan', [LaporanController::class, 'index']); // Endpoint laporan
+});
+
 
 });

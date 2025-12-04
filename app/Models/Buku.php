@@ -28,4 +28,9 @@ class Buku extends Authenticatable
     {
         return $this->hasMany(DetailPeminjaman::class);
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(peminjaman::class);
+    }
 }
