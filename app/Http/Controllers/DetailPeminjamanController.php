@@ -73,14 +73,10 @@ class DetailPeminjamanController extends Controller
 
     public function destroy(Request $request, string $id)
     {
-        $userId = Auth::id();
-        $detailPeminjaman = DetailPeminjaman::find($id);
-        if(!$detailPeminjaman || $detailPeminjaman->id_detail != $userId) 
-        {
-            return response()->json(['message' => 'Detail tidak ditemukan!']);
+    $detailPeminjaman = DetailPeminjaman::find($id);
+    
+    if(!$detailPeminjaman) {
+        return response()->json(['message' => 'Detail tidak ditemukan!'], 404);
         }
-
-        $detailPeminjaman->delete();
-        return response()->json(['message' => 'Detail berhasil di hapus']);
     }
 }
