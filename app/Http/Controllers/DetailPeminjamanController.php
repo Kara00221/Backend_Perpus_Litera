@@ -11,7 +11,7 @@ class DetailPeminjamanController extends Controller
 {
     public function index()
     {
-        return DetailPeminjaman::with(['peminjaman', 'buku'])->get();
+        return DetailPeminjaman::with(['peminjaman.user', 'buku'])->get();
     }
 
     public function getByPeminjaman(Request $request, string $id)
