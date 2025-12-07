@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use App\Models\User;
+use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -80,6 +81,8 @@ class PeminjamanController extends Controller
         {
             return response()->json(['message' => 'Peminjaman tidak ditemukan'], 404);
         }
+
+        DetailPeminjaman::where('id_peminjaman', $id)->delete();
 
         $peminjaman->delete();
         return response()->json(['message' => 'Peminjaman berhasil dihapus.']);
