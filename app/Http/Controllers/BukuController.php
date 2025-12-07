@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\User;
+use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,6 +86,8 @@ class BukuController extends Controller
         {
             return response()->json(['message' => 'Buku tidak ditemukan!']);
         }
+
+        DetailPeminjaman::where('id_buku', $id)->delete();
 
         $buku->delete();
         return response()->json(['message' => 'Buku berhasil di hapus']);
