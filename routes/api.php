@@ -33,7 +33,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/detailPeminjaman/peminjaman/{id}', [DetailPeminjamanController::class,'getByPeminjaman']);
     Route::post('/detailPeminjaman/create', [DetailPeminjamanController::class,'store']);
     Route::post('/detailPeminjaman/update/{id}', [DetailPeminjamanController::class,'update']);
-    Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'delete']);
+    Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'destroy']);
     //DetailPeminjaman
 
     Route::post('/logout', [UserController::class,'logout']);
