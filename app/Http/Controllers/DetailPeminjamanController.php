@@ -8,17 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DetailPeminjamanController extends Controller
-{
-    DetailPeminjaman::with(['peminjaman.user', 'buku'])->get();
-    
+{    
     public function index()
     {
-        return DetailPeminjaman::with(['peminjaman', 'buku'])->get();
+        return DetailPeminjaman::with(['peminjaman.user', 'buku'])->get();
     }
 
     public function getByPeminjaman(Request $request, string $id)
     {
-        $detailPeminjaman = DetailPeminjaman::where('id_peminjaman', $id)->get();
+        $detailPeminjaman = DetailPeminjaman::with(['peminjaman.user', 'buku'])->where('id_peminjaman', $id)->get();
 
         if($detailPeminjaman->isEmpty())
         {
