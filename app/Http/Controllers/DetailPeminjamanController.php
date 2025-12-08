@@ -60,11 +60,18 @@ class DetailPeminjamanController extends Controller
             'denda' => 'required',
         ]);
 
-        $userId = Auth::id();
+        $user = Auth::user();
         $detailPeminjaman = DetailPeminjaman::find($id);
-        if(!$detailPeminjaman || $detailPeminjaman->id_detail != $userId) 
-        {
-            return response()->json(['message' => 'Detail tidak ditemukan!']);
+        
+        if(!$detailPeminjaman) {
+            return response()->json(['message' => 'Detail tidak ditemukan!'], 404);
+        }
+        $isPustakawan = $user->role === 'pustakawan';
+        $isPemilik = $detailPeminjaman->peminjaman && 
+                    $detailPeminjaman->peminjaman->id_users == $user->id_users;
+        
+        if(!$isPustakawan && !$isPemilik) {
+            return response()->json(['message' => 'Tidak memiliki akses'], 403);
         }
 
         $detailPeminjaman->update($validatedData);
@@ -73,14 +80,21 @@ class DetailPeminjamanController extends Controller
 
     public function destroy(Request $request, string $id)
     {
-        $userId = Auth::id();
         $detailPeminjaman = DetailPeminjaman::find($id);
-        if(!$detailPeminjaman || $detailPeminjaman->id_detail != $userId) 
-        {
-            return response()->json(['message' => 'Detail tidak ditemukan!']);
+        
+        if(!$detailPeminjaman) {
+            return response()->json(['message' => 'Detail tidak ditemukan!'], 404);
         }
-
+        $user = Auth::user();
+        $isPustakawan = $user->role === 'pustakawan';
+        $isPemilik = $detailPeminjaman->peminjaman && 
+                    $detailPeminjaman->peminjaman->id_users == $user->id_users;
+        
+        if(!$isPustakawan && !$isPemilik) {
+            return response()->json(['message' => 'Tidak memiliki akses'], 403);
+        }
+        
         $detailPeminjaman->delete();
-        return response()->json(['message' => 'Detail berhasil di hapus']);
+        return response()->json(['message' => 'Detail berhasil dihapus']);
     }
 }

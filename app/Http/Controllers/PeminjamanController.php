@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use App\Models\User;
+use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -18,16 +19,15 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tanggal_peminjaman' => 'required',
+            'id_users' => 'required|exists:users,id_users',
+            'tanggal_peminjaman' => 'required|date',
         ]);
 
         $tanggalPinjam = Carbon::parse($validatedData['tanggal_peminjaman']);
-
         $tanggalKembali = $tanggalPinjam->copy()->addDays(7);
 
-        $userId = Auth::id();
         $peminjaman = Peminjaman::create([
-            'id_users' => $userId,
+            'id_users' => $validatedData['id_users'],
             'tanggal_peminjaman' => $tanggalPinjam,
             'tanggal_pengembalian' => $tanggalKembali,
         ]);
@@ -38,18 +38,35 @@ class PeminjamanController extends Controller
         ], 201);
     }
 
+    public function show($id)
+    {
+        $peminjaman = Peminjaman::with('user')->find($id);
+        
+        if (!$peminjaman) 
+        {
+            return response()->json(['message' => 'Peminjaman tidak ditemukan'], 404);
+        }
+        
+        return response()->json($peminjaman);
+    }
+
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'tanggal_pengembalian' => 'required',
+            'tanggal_pengembalian' => 'required|date',
         ]);
 
-        $userId = Auth::id();
+        $user = Auth::user();
         $peminjaman = Peminjaman::find($id);
 
-        if(!$peminjaman || $peminjaman->id_users != $userId)
+        if(!$peminjaman)
         {
-            return response()->json(['message' => 'Peminjaman tidak ditemukan'], 403);
+            return response()->json(['message' => 'Peminjaman tidak ditemukan'], 404);
+        }
+
+        if($user->role !== 'pustakawan' && $peminjaman->id_users != $user->id_users)
+        {
+            return response()->json(['message' => 'Tidak memiliki akses'], 403);
         }
 
         $peminjaman->update($validatedData);
@@ -58,15 +75,16 @@ class PeminjamanController extends Controller
 
     public function destroy(Request $request, string $id)
     {
-        $userId = Auth::id();
         $peminjaman = Peminjaman::find($id);
 
-        if(!$peminjaman || $peminjaman->id_users != $userId)
+        if(!$peminjaman)
         {
-            return response()->json(['message' => 'Peminjaman tidak ditemukan'], 403);
+            return response()->json(['message' => 'Peminjaman tidak ditemukan'], 404);
         }
 
+        DetailPeminjaman::where('id_peminjaman', $id)->delete();
+
         $peminjaman->delete();
-        return response()->json(['message' => 'Peminjaman berhaisl di hapus.']);
+        return response()->json(['message' => 'Peminjaman berhasil dihapus.']);
     }
 }

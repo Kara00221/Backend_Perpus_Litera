@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Models\DetailPeminjaman;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanController;
 
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
@@ -19,6 +20,7 @@ Route::middleware(['auth:api'])->group(function () {
     //Peminjaman
     Route::get('/peminjaman', [PeminjamanController::class,'index']);
     Route::post('/peminjaman/create', [PeminjamanController::class,'store']);
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
     Route::post('/peminjaman/update/{id}', [PeminjamanController::class, 'update']);
     Route::delete('/peminjaman/delete/{id}', [PeminjamanController::class,'destroy']);
 
@@ -35,7 +37,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/detailPeminjaman/peminjaman/{id}', [DetailPeminjamanController::class,'getByPeminjaman']);
     Route::post('/detailPeminjaman/create', [DetailPeminjamanController::class,'store']);
     Route::post('/detailPeminjaman/update/{id}', [DetailPeminjamanController::class,'update']);
-    Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'delete']);
+    Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'destroy']);
     //DetailPeminjaman
+
+    //Laporan
+    Route::get('/laporan', [LaporanController::class, 'laporan']);
+    //Laporan
 
 });
