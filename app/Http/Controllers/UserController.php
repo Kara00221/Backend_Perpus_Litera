@@ -62,6 +62,12 @@ class UserController extends Controller
         return response()->json(User::all());
     }
 
+    public function getAnggota()
+    {
+        $anggota = User::where('role', 'anggota')->get();
+
+        return response()->json($anggota);
+    }
 
     public function logout(Request $request)
     {

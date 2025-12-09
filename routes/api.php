@@ -12,6 +12,7 @@ use App\Http\Controllers\LaporanController;
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/anggota', [UserController::class, 'getAnggota']);
 
 Route::middleware('auth:sanctum')->post('/logout', [UserController::class, 'logout']);
 

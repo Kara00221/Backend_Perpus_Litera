@@ -21,15 +21,13 @@ class PeminjamanController extends Controller
         $validatedData = $request->validate([
             'id_users' => 'required|exists:users,id_users',
             'tanggal_peminjaman' => 'required|date',
+            'tanggal_pengembalian' => 'required|date',
         ]);
-
-        $tanggalPinjam = Carbon::parse($validatedData['tanggal_peminjaman']);
-        $tanggalKembali = $tanggalPinjam->copy()->addDays(7);
 
         $peminjaman = Peminjaman::create([
             'id_users' => $validatedData['id_users'],
-            'tanggal_peminjaman' => $tanggalPinjam,
-            'tanggal_pengembalian' => $tanggalKembali,
+            'tanggal_peminjaman' => $validatedData['tanggal_peminjaman'],
+            'tanggal_pengembalian' => $validatedData['tanggal_pengembalian'],
         ]);
 
         return response()->json([
