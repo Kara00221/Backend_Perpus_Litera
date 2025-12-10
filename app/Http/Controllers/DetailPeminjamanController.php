@@ -14,17 +14,30 @@ class DetailPeminjamanController extends Controller
         return DetailPeminjaman::with(['peminjaman.user', 'buku'])->get();
     }
 
-    public function getByPeminjaman(Request $request, string $id)
-    {
-        $detailPeminjaman = DetailPeminjaman::with(['peminjaman.user', 'buku'])->where('id_peminjaman', $id)->get();
-
-        if($detailPeminjaman->isEmpty())
+    public function getMyBooks(Request $request)
         {
-            return response()->json(['message'=> 'Detail tidak ditemukan'],404);
+            $user = Auth::user(); 
+            $data = DetailPeminjaman::with(['buku', 'peminjaman'])
+                    ->whereHas('peminjaman', function($query) use ($user) {
+                        $query->where('id_users', $user->id_users);
+                    })
+                        ->orderBy('id_detail', 'desc')
+                        ->get();
+
+            return response()->json($data);
         }
 
-        return response()->json($detailPeminjaman);
-    }
+    public function getByPeminjaman(Request $request, string $id)
+        {
+            $detailPeminjaman = DetailPeminjaman::with(['peminjaman.user', 'buku'])
+                                ->where('id_peminjaman', $id)
+                                ->get();
+            if($detailPeminjaman->isEmpty())
+            {
+                return response()->json([], 200); 
+            }
+            return response()->json($detailPeminjaman, 200);
+        }
 
     public function store(Request $request)
     {

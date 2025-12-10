@@ -33,6 +33,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/buku/delete/{id}', [BukuController::class,'destroy']);
     //Buku
 
+    // Khusus untuk Anggota melihat bukunya sendiri
+    Route::get('/detailPeminjaman/my-books', [DetailPeminjamanController::class, 'getMyBooks']);
+    // Khusus untuk Anggota melihat bukunya sendiri
+    
     //DetailPeminjaman
     Route::get('/detailPeminjaman', [DetailPeminjamanController::class,'index']);
     Route::get('/detailPeminjaman/peminjaman/{id}', [DetailPeminjamanController::class,'getByPeminjaman']);
