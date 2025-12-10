@@ -28,6 +28,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::delete('/buku/delete/{id}', [BukuController::class,'destroy']);
     //Buku
 
+    Route::get('/detailPeminjaman/me', [DetailPeminjamanController::class, 'peminjamanSaya']);  
+    
     //DetailPeminjaman
     Route::get('/detailPeminjaman', [DetailPeminjamanController::class,'index']);
     Route::get('/detailPeminjaman/peminjaman/{id}', [DetailPeminjamanController::class,'getByPeminjaman']);

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class DetailPeminjamanController extends Controller
 {
     public function index()
@@ -96,5 +97,16 @@ class DetailPeminjamanController extends Controller
         
         $detailPeminjaman->delete();
         return response()->json(['message' => 'Detail berhasil dihapus']);
+    }
+
+    public function peminjamanSaya()
+    {
+        $userId = Auth::id(); 
+        
+        $data = DetailPeminjaman::whereHas('peminjaman', function($query) use ($userId) {
+            $query->where('id_users', $userId); 
+        })->with(['buku', 'peminjaman'])->get();
+
+        return response()->json($data);
     }
 }
