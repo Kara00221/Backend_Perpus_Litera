@@ -39,6 +39,23 @@ class DetailPeminjamanController extends Controller
             return response()->json($detailPeminjaman, 200);
         }
 
+    public function show($id)
+    {
+        $detail = DetailPeminjaman::find($id);
+
+        if (!$detail) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Detail peminjaman tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $detail
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([

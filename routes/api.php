@@ -31,6 +31,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/buku/create', [BukuController::class,'store']);
     Route::post('/buku/update/{id}', [BukuController::class,'update']);
     Route::delete('/buku/delete/{id}', [BukuController::class,'destroy']);
+    Route::get('/buku/{id}', [BukuController::class,'show']);
     //Buku
 
     // Khusus untuk Anggota melihat bukunya sendiri
@@ -43,6 +44,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/detailPeminjaman/create', [DetailPeminjamanController::class,'store']);
     Route::post('/detailPeminjaman/update/{id}', [DetailPeminjamanController::class,'update']);
     Route::delete('/detailPeminjaman/delete/{id}', [DetailPeminjamanController::class,'destroy']);
+    Route::get('/detailPeminjaman/{id}', [DetailPeminjamanController::class, 'show']);
     //DetailPeminjaman
 
     //Laporan
