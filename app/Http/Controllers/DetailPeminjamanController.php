@@ -88,6 +88,7 @@ class DetailPeminjamanController extends Controller
             'id_buku' => 'required',
             'jumlah' => 'required',
             'denda' => 'required',
+            'status' => 'required'
         ]);
 
         $user = Auth::user();
